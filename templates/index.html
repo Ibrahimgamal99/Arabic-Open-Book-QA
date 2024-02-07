@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+	<meta charset="UTF-8">
+	<title>إرسال الأسئلة</title>
+	<style>
+		body {
+			background-color: #222;
+			color: #fff;
+			font-family: sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		.container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 95vh;
+		}
+		.form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			background-color: #37363a;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+			max-width: 80%;
+			width: 600px;
+		}
+		.form input[type=text], .form textarea {
+			background-color: #444;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			margin: 10px 0;
+			width: 125%;
+			resize: none;
+			text-align: right;
+			direction: rtl;
+		}
+		.form input[type=submit] {
+			background-color: #0366d6;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			margin: 10px 0;
+			width: 30%;
+			cursor: pointer;
+		}
+		.answer {
+			background-color: #37363a;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+			max-width: 80%;
+			width: 600px;
+			display: none;
+		}
+		.answer h2 {
+			margin-top: 0;
+		}
+		.answer p {
+			margin-bottom: 0;
+			text-align: right;
+			direction: rtl;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="form">
+			<h1>طرح سؤال</h1>
+			<form id="question-form">
+				<label for="question">السؤال :</label>
+				<textarea id="question" name="question" rows="1" required></textarea>
+				<input type="submit" value="إرسال">
+			</form>
+		</div>
+		<div class="answer" id="answer">
+			<h2>الإجابة :</h2>
+			<p id="answer-text"></p>
+			<h2>السياق :</h2>
+			<p id="context-text"></p>
+		</div>
+	</div>
+	<script>
+		const form = document.getElementById('question-form');
+		const answer = document.getElementById('answer');
+		const answerText = document.getElementById('answer-text');
+		const contextText = document.getElementById('context-text');
+
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			const question = document.getElementById('question').value;
+
+			// Send the question to the server using AJAX or fetch
+			// and receive the response in JSON format
+			// Replace the URL with the actual endpoint of your server
+			fetch('http://127.0.0.1:5000/predict', {
+				method: 'POST',
+				body: JSON.stringify({ question }),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			.then(response => response.json())
+			.then(data => {
+				// Display the answer and context on the page
+				answerText.textContent = data.answer;
+				contextText.textContent = data.context;
+				answer.style.display = 'block';
+			})
+			.catch(error => console.error(error));
+		});
+	</script>
+</body>
+</html>
