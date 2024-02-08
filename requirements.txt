@@ -1,0 +1,6 @@
+nltk
+transformers
+rank-bm25
+pyarabic
+flask
+flask-cors
