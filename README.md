@@ -1,4 +1,3 @@
-asdfsdfsd  adgvdf
 # Arabic Open Book QA
 
 The **Arabic Open Book QA** is an advanced question-answering (QA) system aiming to enhance traditional QA approaches. In contrast to conventional methods directly matching context and questions for answers, our system integrates an information retrieval mechanism powered by the BM25 algorithm. This approach seeks to obtain context similar to the provided question, enabling answer extraction from the retrieved context using Transformers for Question Answering.
